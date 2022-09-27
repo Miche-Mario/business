@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.accordionn {
+    max-width: 800px;
+    margin: 2rem auto;
+  }
+  
+  .accordionn-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: rgb(240, 241, 255);
+  }
+  
+  .accordionn-title:hover {
+    background-color: rgb(76, 79, 121);
+    color: white;
+  }
+  
+  .accordionn-title,
+  .accordionn-content {
+    padding: 1rem;
+  }
+  
+  .accordionn-content {
+    background-color: #F8F8F8;
+    border-radius: 10px;
+  }
+  
+  @media screen and (max-width: 700px) {
+    body {
+      font-size: 18px;
+    }
+  
+    .accordionn {
+      width: 90%;
+    }
+  }
+
+  .apdf {
+    color: white;
+    margin-left: 10px;
+  }
+  .apdf:hover {
+    text-decoration: underline;
+    color: white;
+  }
+  .accordionn {
+  
+    background: #777;
+    -webkit-box-shadow: 0 15px 10px #777;
+    -moz-box-shadow: 0 15px 10px #777;
+    box-shadow: 0 15px 10px #777;
+  
+  
+  }
+  .line {
+   
+    text-align: center; 
+    border-bottom: 1px solid #000; 
+    line-height: 0.1em;
+    margin: 10px 0 20px; 
+ } 
+ 
+.line span { 
+     background:#fff; 
+     padding:0 10px; 
+ }
+
+
+
+
+  /* Compiled dark classes from Tailwind */
+  .dark .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
+    border-color: rgba(55, 65, 81);
+  }
+  .dark .dark\:bg-gray-50 {
+    background-color: rgba(249, 250, 251);
+  }
+  .dark .dark\:bg-gray-100 {
+    background-color: rgba(243, 244, 246);
+  }
+  .dark .dark\:bg-gray-600 {
+    background-color: rgba(75, 85, 99);
+  }
+  .dark .dark\:bg-gray-700 {
+    background-color: rgba(55, 65, 81);
+  }
+  .dark .dark\:bg-gray-800 {
+    background-color: rgba(31, 41, 55);
+  }
+  .dark .dark\:bg-gray-900 {
+    background-color: rgba(17, 24, 39);
+  }
+  .dark .dark\:bg-red-700 {
+    background-color: rgba(185, 28, 28);
+  }
+  .dark .dark\:bg-green-700 {
+    background-color: rgba(4, 120, 87);
+  }
+  .dark .dark\:hover\:bg-gray-200:hover {
+    background-color: rgba(229, 231, 235);
+  }
+  .dark .dark\:hover\:bg-gray-600:hover {
+    background-color: rgba(75, 85, 99);
+  }
+  .dark .dark\:hover\:bg-gray-700:hover {
+    background-color: rgba(55, 65, 81);
+  }
+  .dark .dark\:hover\:bg-gray-900:hover {
+    background-color: rgba(17, 24, 39);
+  }
+  .dark .dark\:border-gray-100 {
+    border-color: rgba(243, 244, 246);
+  }
+  .dark .dark\:border-gray-400 {
+    border-color: rgba(156, 163, 175);
+  }
+  .dark .dark\:border-gray-500 {
+    border-color: rgba(107, 114, 128);
+  }
+  .dark .dark\:border-gray-600 {
+    border-color: rgba(75, 85, 99);
+  }
+  .dark .dark\:border-gray-700 {
+    border-color: rgba(55, 65, 81);
+  }
+  .dark .dark\:border-gray-900 {
+    border-color: rgba(17, 24, 39);
+  }
+  .dark .dark\:hover\:border-gray-800:hover {
+    border-color: rgba(31, 41, 55);
+  }
+  .dark .dark\:text-white {
+    color: rgba(255, 255, 255);
+  }
+  .dark .dark\:text-gray-50 {
+    color: rgba(249, 250, 251);
+  }
+  .dark .dark\:text-gray-100 {
+    color: rgba(243, 244, 246);
+  }
+  .dark .dark\:text-gray-200 {
+    color: rgba(229, 231, 235);
+  }
+  .dark .dark\:text-gray-400 {
+    color: rgba(156, 163, 175);
+  }
+  .dark .dark\:text-gray-500 {
+    color: rgba(107, 114, 128);
+  }
+  .dark .dark\:text-gray-700 {
+    color: rgba(55, 65, 81);
+  }
+  .dark .dark\:text-gray-800 {
+    color: rgba(31, 41, 55);
+  }
+  .dark .dark\:text-red-100 {
+    color: rgba(254, 226, 226);
+  }
+  .dark .dark\:text-green-100 {
+    color: rgba(209, 250, 229);
+  }
+  .dark .dark\:text-blue-400 {
+    color: rgba(96, 165, 250);
+  }
+  .dark .group:hover .dark\:group-hover\:text-gray-500 {
+    color: rgba(107, 114, 128);
+  }
+  .dark .group:focus .dark\:group-focus\:text-gray-700 {
+    color: rgba(55, 65, 81);
+  }
+  .dark .dark\:hover\:text-gray-100:hover {
+    color: rgba(243, 244, 246);
+  }
+  .dark .dark\:hover\:text-blue-500:hover {
+    color: rgba(59, 130, 246);
+  }
+
+  /* Custom style */
+  .header-right {
+      width: calc(100% - 3.5rem);
+  }
+  .sidebar:hover {
+      width: 16rem;
+  }
+  @media only screen and (min-width: 768px) {
+      .header-right {
+          width: calc(100% - 16rem);
+      }        
+  }
+
+
+
+  .slidecontainer {
+    width: 100%; /* Width of the outside container */
+  }
+  
+  /* The slider itself */
+  .slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+  
+  /* Mouse-over effects */
+  .slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+  
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #04AA6D; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #04AA6D; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+  .bbg {
+    background-image:url("./img/bck.jpg");
+  }
