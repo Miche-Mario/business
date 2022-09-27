@@ -8,31 +8,19 @@ import Identifier from '../component/Steps/Identifier'
 import Complete from '../component/Steps/Complete'
 import translate from '../component/i18n/messages/translate'
 import Signup from '../component/Steps/Signup'
+import Layout from '../component/Screen/Layout'
 
 
 
 
 const AddUser = () => {
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isError } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    dispatch(getMe());
-  }, [dispatch])
-
-  useEffect(() => {
-    if(isError) {
-      navigate("/login")
-    }
-  }, [isError, navigate
-  ])
 
 
 const [currentStep, setCurrentStep] = useState(1);
 const [studentData, setStudentData] = useState('');
 const [finalData, setFinalData] = useState([]);
+const [open, setOpen] = useState(false)
 
 const steps = [
   translate('add.step1'),
@@ -46,7 +34,7 @@ const steps = [
 const displayStep = (step) => {
   switch(step) {
     case 1:
-      return <Remplir/>
+      return <Remplir click={click}/>
     case 2:
       return <Identifier/>
     case 3:
@@ -55,7 +43,7 @@ const displayStep = (step) => {
       return <Complete/>
   }
 }
-
+console.log(open)
 const handleClick = (direction) => {
   let newStep = currentStep;
 
@@ -63,6 +51,10 @@ const handleClick = (direction) => {
 
   //Check if steps are within bounds
   newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
+}
+const click = (e) => {
+  e.preventDefault()
+  setOpen(!open)
 }
   return (
     <>
@@ -95,9 +87,10 @@ const handleClick = (direction) => {
         />
         <div className='my-10 p-2 pb-0'>
           <StepperContext.Provider value={{
-            studentData,
-            setStudentData
-
+          studentData,
+          setStudentData,
+          finalData,
+          setFinalData
           }}>
             {displayStep(currentStep)}
           </StepperContext.Provider>
@@ -107,6 +100,7 @@ const handleClick = (direction) => {
             handleClick={handleClick}
             currentStep={currentStep}
             steps={steps}
+            open={open}
         />
    
         </div>

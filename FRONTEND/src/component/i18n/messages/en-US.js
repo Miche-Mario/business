@@ -123,6 +123,7 @@ export default {
             source: 'Source of Income',
             signh3: 'Online Banking Account',
             signp1: 'Welcome! Sign Up Now',
+            username: 'Username',
             password: 'Password',
             confirm: 'Confirm Password',
             signbut: 'Register Now',

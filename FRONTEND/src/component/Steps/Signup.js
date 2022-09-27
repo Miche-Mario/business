@@ -1,7 +1,34 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import translate from '../../component/i18n/messages/translate'
 import { FormattedMessage} from 'react-intl'
+import axios from 'axios'
+
 const Signup = () => {
+
+    const [username, setUsername] = useState()
+    const [password, setPassword] = useState()
+    const [confirmpasword, setConfirmPassword] = useState();
+    const [role, setRole] = useState("user");
+    const [msg, setMsg] = useState("");
+
+
+    const saveUser = async (e) => {
+        e.preventDefault();
+        try {
+          await axios.post(`${process.env.REACT_APP_BASE_URL}/users`, {
+            username: username,
+            password: password,
+            username: username,
+            role: role
+          });
+         
+        } catch (error) {
+          if (error.response) {
+            setMsg(error.response.data.msg);
+          }
+        }
+      }
+    
     return (
 
 
@@ -17,32 +44,32 @@ const Signup = () => {
                             </div>
                             <div class="login-form">
                                 <div class="login-body">
-                                    <form class="form-wrap" action="#">
+                                    <form onSubmit={saveUser} class="form-wrap" action="#">
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
-                                                <label className='font-bold' for="fname">{translate('add.formname1')} *</label>
-                                                    <FormattedMessage id="add.formname1">
+                                                <label className='font-bold' for="fname">{translate('add.username')} *</label>
+                                                    <FormattedMessage id="add.username">
                                                         {placeholder => <input id="text" type="text"
-                                                          required   placeholder={placeholder} />}
+                                                          required   placeholder={placeholder} 
+                                                          onChange={(e) => setUsername(e.target.value)}
+                                                          name="username"
+                                                          value={username}
+
+                                                          />}
                                                     </FormattedMessage>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                <label className='font-bold' for="fname">{translate('add.email')} *</label>
-                                                <FormattedMessage id="add.email">
-                                                        {placeholder => <input id="text" type="text"
-                                                             placeholder={placeholder} />}
-                                                    </FormattedMessage>
-                                                </div>
-                                            </div>
+                                          
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                 <label className='font-bold' for="fname">Password *</label>
                                                 <FormattedMessage id="add.password">
                                                         {placeholder => <input id="text" type="text"
-                                                             placeholder={placeholder} />}
+                                                             onChange={(e) => setPassword(e.target.value)}
+                                                             name="password"
+                                                             value={password}
+                                                             />}
                                                     </FormattedMessage>
                                                 </div>
                                             </div>
@@ -51,7 +78,11 @@ const Signup = () => {
                                                 <label className='font-bold' for="fname">{translate('add.confirm')} *</label>
                                                 <FormattedMessage id="add.confirm">
                                                         {placeholder => <input id="text" type="text"
-                                                             placeholder={placeholder} />}
+                                                             placeholder={placeholder} 
+                                                             onChange={(e) => setConfirmPassword(e.target.value)}
+                                                             name="confimpassword"
+                                                             value={confirmpasword}
+                                                             />}
                                                     </FormattedMessage>
                                                 </div>
                                             </div>
