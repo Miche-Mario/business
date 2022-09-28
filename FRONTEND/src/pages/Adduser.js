@@ -36,9 +36,9 @@ const displayStep = (step) => {
     case 1:
       return <Remplir click={click}/>
     case 2:
-      return <Identifier/>
+      return <Identifier click={click}/>
     case 3:
-      return <Signup/>
+      return <Signup click={click}/>
     case 4:
       return <Complete/>
   }
@@ -55,6 +55,10 @@ const handleClick = (direction) => {
 const click = (e) => {
   e.preventDefault()
   setOpen(!open)
+}
+const clickk = (e) => {
+  e.preventDefault()
+  setOpen(false)
 }
   return (
     <>
@@ -101,6 +105,8 @@ const click = (e) => {
             currentStep={currentStep}
             steps={steps}
             open={open}
+            click={click}
+            clickk={clickk}
         />
    
         </div>

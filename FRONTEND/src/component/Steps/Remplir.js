@@ -49,8 +49,8 @@ const Remplir = ({click}) => {
             </div>
             <div class="col-md-3">
               <div class="form-group">
-                <label className='font-bold' for="email">{translate('add.codefiscal')}</label>
-                <input className='border border-dark w-3' type="text" id="email" 
+                <label className='font-bold ' for="email">{translate('add.codefiscal')}</label>
+                <input className='border border-dark w-3 uppercase' type="text" id="email" 
                   onChange={handleChange}
                   name="fiscalcode"
                   value={studentData["fiscalcode"] || ""}
@@ -92,11 +92,11 @@ const Remplir = ({click}) => {
           </div>
           <button 
           // onClick={()=>handleClick("next")}
-          className='mr-14 bg-green-400 text-white  uppercase py-2 px-4
+          className='mr-14 bg-blue-400 text-white  uppercase py-2 px-4
           rounded-xl font-semibold cursor-pointer  
-          hover:bg-green-600 hover:text-white transition duration-200 ease-in-out '
+          hover:bg-blue-600 hover:text-white transition duration-200 ease-in-out '
         >
-            Next
+            Send
         </button>
         </form>
       </div>

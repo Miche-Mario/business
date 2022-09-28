@@ -1,27 +1,46 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useContext } from 'react'
 import translate from '../../component/i18n/messages/translate'
 import { FormattedMessage} from 'react-intl'
 import axios from 'axios'
+import { StepperContext } from './contexts/stepperContext'
 
-const Signup = () => {
+
+const Signup = ({click}) => {
 
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
     const [confirmpasword, setConfirmPassword] = useState();
     const [role, setRole] = useState("user");
     const [msg, setMsg] = useState("");
+    const [validate, setValidate] = useState(true);
 
+    const { studentData, setStudentData } = useContext(StepperContext)
 
+console.log(studentData.address1)
     const saveUser = async (e) => {
         e.preventDefault();
         try {
           await axios.post(`${process.env.REACT_APP_BASE_URL}/users`, {
+            firstname: studentData.firstname,
+            surname: studentData.surname,
+            fiscalcode: studentData.fiscalcode,
+            email: studentData.email,
+            dateofbirth: studentData.dateofbirth,
+            gender: studentData.gender,
+            maritalstatus: studentData.maritalstatus,
+            phonenumber: studentData.phonenumber,
+            address1: studentData.address1,
+            address2: studentData.address2,
+            occupation: studentData.occupation,
+            monthlyincome: studentData.monthlyincome,
+            sourceofincome: studentData.sourceofincome,
             username: username,
             password: password,
-            username: username,
+            confirmpassword: confirmpasword,
             role: role
           });
-         
+         click(e);
+         setValidate(!validate)
         } catch (error) {
           if (error.response) {
             setMsg(error.response.data.msg);
@@ -86,14 +105,15 @@ const Signup = () => {
                                                     </FormattedMessage>
                                                 </div>
                                             </div>
-                                            
-                                            <div class="col-lg-12">
+                                            <p className='text-sm text-center text-red'>{validate && msg}</p>
+
+                                            {validate && <div class="col-lg-12">
                                                 <div class="form-group">
-                                                    <button class="btn style1">
+                                                    <button type='submit' class="btn style1">
                                                     {translate('add.signbut')}
                                                     </button>
                                                 </div>
-                                            </div>
+                                            </div>}
                                             
                                         </div>
                                     </form>
