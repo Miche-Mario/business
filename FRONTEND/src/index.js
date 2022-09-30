@@ -21,6 +21,8 @@ import Users from './pages/Users';
 import ShowUser from './pages/ShowUser';
 import axios from "axios"
 import Transaction from './pages/Transaction';
+import Message from './pages/Message';
+import DemandePret from './pages/DemandePret';
 axios.defaults.withCredentials = true;
 
 
@@ -46,6 +48,8 @@ root.render(
             <Route path='/users' element={<Users/>}  />
             <Route path='/users/afficher/:id' element={<ShowUser/>}  />
             <Route path='/transaction' element={<Transaction/>}  />
+            <Route path='/notifications' element={<Message/>}  />
+            <Route path='/demandepret' element={<DemandePret/>}  />
         </Routes>
         </BrowserRouter>
         </Providerr>

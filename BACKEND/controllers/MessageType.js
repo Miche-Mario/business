@@ -7,7 +7,7 @@ import MessageType from "../models/MessageTypeModels.js";
 export const getMessageType = async (req,res) => {
     try {
         const response = await MessageType.findAll({
-            attributes: ['uuid', 'idd','messagetype']
+            attributes: [ 'idd','messagetype']
         });
         res.status(200).json(response);
     } catch (error) {
@@ -20,7 +20,7 @@ export const getMessageType = async (req,res) => {
 export const createMessageType = async(req,res) => {
     const {messagetype, idd} = req.body;
     try {
-        await Taux.create({
+        await MessageType.create({
             idd: idd,
             messagetype: messagetype
         });

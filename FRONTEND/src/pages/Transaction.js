@@ -13,7 +13,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { getMe } from '../features/auth/authSlice'
 import { BiEdit } from 'react-icons/bi'
 import { MdDeleteSweep } from 'react-icons/md'
-const Users = () => {
+const Transaction = () => {
 
    
   const dispatch = useDispatch();
@@ -76,10 +76,10 @@ const Users = () => {
         getUsers()
     }, [])
 
-    const [userid, setUserid] = useState([]);
-    const [courant, setCourant] = useState([]);
-    const [pret, setPret] = useState([]);
-    const [description, setDescription] = useState([]);
+    const [userid, setUserid] = useState();
+    const [courant, setCourant] = useState();
+    const [pret, setPret] = useState();
+    const [description, setDescription] = useState();
     
 console.log(users)
 
@@ -94,9 +94,7 @@ console.log(users)
             description: description,   
             userid: userid 
           });
-        
-          console.log("ok")
-
+          navigate(0);
         } catch (error) {
           if (error.response) {
             setMsg(error.response.data.msg);
@@ -105,6 +103,7 @@ console.log(users)
         }
       }
 
+      console.log(userid)
 
     const [open1, setOpen1] = useState(false);
     const [va, setVa] = useState("");
@@ -116,6 +115,10 @@ console.log(users)
     const handleClose1 = () => {
       setOpen1(false);
     };
+
+    const deux = (b) => {
+        return b.toFixed(2);
+    }
 
     return (
         <Layout>
@@ -213,6 +216,7 @@ console.log(users)
                                             </thead>
                                             <tbody className="text-gray-600  text-sm font-light">
                                                 {transaction.map((trans, index) => (
+                                                   
                                                     <tr key={trans.uuid} className="border-b border-gray-200  hover:bg-gray-100">
 
                                                         <td className=" py-3 px-3 text-center">
@@ -226,12 +230,12 @@ console.log(users)
                                                         </td>
                                                         <td className=" py-3 px-3 text-center whitespace-nowrap">
                                                             <div className="flex items-center justify-center">
-                                                                <span className="font-medium text-center">{trans.courant}</span>
+                                                                <span className="font-medium text-center">{deux(parseInt(trans.courant))}</span>
                                                             </div>
                                                         </td>
                                                         <td className=" py-3 px-3 text-center">
                                                             <div className="flex items-center justify-center">
-                                                                <span className="font-medium">{trans.pret}</span>
+                                                                <span className="font-medium">{deux(parseInt(trans.pret))}</span>
                                                             </div>
                                                         </td>
                                                         <td className=" py-3 px-3 text-center">
@@ -251,4 +255,4 @@ console.log(users)
     )
 }
 
-export default Users
+export default Transaction

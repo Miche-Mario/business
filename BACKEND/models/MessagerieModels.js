@@ -22,6 +22,13 @@ const Messagerie = db.define('messagerie', {
             notEmpty: false,
                 }
     },
+    username:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate:{
+            notEmpty: false,
+                }
+    },
     sent:{
         type: DataTypes.BOOLEAN,
         allowNull: false,

@@ -7,7 +7,7 @@ import path from "path"
 export const getUsers = async(req,res) => {
     try {
         const response = await Users.findAndCountAll({
-            attributes: ['profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
+            attributes: ['id','profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
             where: {
                 role: 'user'
             }
@@ -22,7 +22,7 @@ export const getUserByName = async(req,res) => {
     const { search } = await req.body;
     try {
         const response = await Users.findAndCountAll({
-            attributes: ['profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
+            attributes: ['id','profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
             where: {
                 firstname: {
                     [Op.like]: `%${search}%`
@@ -38,7 +38,7 @@ export const getUserByName = async(req,res) => {
 export const getUserById = async(req,res) => {
     try {
         const response = await Users.findOne({
-            attributes: ['createdAt','profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
+            attributes: ['id','createdAt','profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
             where: {
                 uuid: req.params.id
             }

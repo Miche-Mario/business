@@ -19,6 +19,22 @@ export const getTransaction = async (req,res) => {
     }
 }
 
+
+export const getTransactionByUser = async (req,res) => {
+    const {userid} = req.body;
+    try {
+        const response = await Transaction.findOne({
+            attributes: ['uuid', 'courant','description', 'pret'],
+            where: {
+                user_userid: userid
+            }
+        });
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+}
+
 export const createTransaction = async(req,res) => {
 
     const {userid, description, user_userid, courant, pret} = req.body;
@@ -28,22 +44,22 @@ export const createTransaction = async(req,res) => {
       
             responsee = await Transaction.findOne({ 
                 where: {
-                    id: userid
+                    user_userid: userid
                 }
             
             });
 
         if(responsee) {
-            try {
+           
                 await Transaction.destroy({
                     where: {
                         id: responsee.id
                     }
                 });
-                res.status(201).json({ msg: "Courses Deleted" });
-            } catch (error) {
-                res.status(400).json({ msg: error.message })
-            }
+              
+
+
+            
         }
             
         

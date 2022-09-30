@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Layout from '../component/Screen/Layout';
 import Welcome from "../img/welcome.PNG"
 import { BiPhoneCall,BiMessageCheck, BiInfoCircle, BiAlarmExclamation, BiCheck } from 'react-icons/bi'
@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getMe } from '../features/auth/authSlice'
-import { useEffect } from 'react'
+import axios from 'axios'
 
 const Dashboard = () => {
 
@@ -23,21 +23,46 @@ const Dashboard = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if(isError) {
-      navigate("/login")
+    if (isError) {
+      navigate("/");
     }
-  }, [isError, navigate
-  ])
-
-
-  useEffect(() => {
-    if(user && user.role === "admin") {
-      navigate("/users")
+    if (user && user.role !== "admin") {
+      navigate("/dashboard");
     }
-  }, [user, navigate
-  ])
+  }, [isError, user, navigate]);
 
-  
+
+  const [transaction, setTransaction] = useState();
+  const [msg, setMsg] = useState("");
+  const [taux, setTaux] = useState();
+
+
+ 
+  const getTransaction = async () => {
+     const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/transactionuser`, {
+      userid:  user.id
+     })
+    setTransaction(response.data)
+}
+
+const getTaux = async () => {
+  const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/taux`)
+ setTaux(response.data[0])
+}
+
+    useEffect(() => {
+
+      setTimeout(() => {
+      getTransaction()
+        getTaux()
+      }, 5000);
+  }, [])
+
+  const deux = (b) => {
+    return b.toFixed(2);
+}
+
+console.log(user && user.id)
 
   return (
     <Layout>
@@ -70,7 +95,7 @@ const Dashboard = () => {
                                    Total Balance
                               </h3>
                               <h3 class="text-center text-white text-3xl mt-2 font-bold">
-                                   EUR 27,580
+                                   EUR { transaction ? deux(parseInt(transaction.courant)) : "0,000"}
                               </h3>
                               <div class="flex mt-4">
                                  <Link to="/transfer">
@@ -128,10 +153,10 @@ const Dashboard = () => {
                                 <p className='text-white'>Loan Account</p>
                               </div>
                               <h3 class="text-white text-3xl mt-2 font-bold">
-                                  EUR 0,000
+                              EUR { transaction ? deux(parseInt(transaction.pret)) : "0,000"}
                               </h3>
                                <h3 class="text-white text-lg mt-2 text-yellow-100 ">
-                                  current Rate 1.8%
+                                  current Rate { taux ? taux.value : "0,00"}%
                               </h3>
                             </div>
                           </div>

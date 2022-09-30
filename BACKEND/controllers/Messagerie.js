@@ -8,14 +8,14 @@ import MessageType from "../models/MessageTypeModels.js";
 
 export const getAdminMessage = async (req,res) => {
     try {
-        const response = await Messagerie.findAll({
-            attributes: ['uuid', 'message','createdAt'],
+        const response = await Messagerie.findAndCountAll({
+            attributes: ['uuid','sent', 'receive','username', 'message','createdAt'],
             include: [{
                 model: Users,
-                model: MessageType
+              
             }],
             where: {
-                receive: true,
+                
                 sent: true
             }
         });
@@ -72,17 +72,18 @@ export const getUserReceiveMessage = async (req,res) => {
 }
 
 export const getMessageByUserId = async (req,res) => {
-    const {userid} = req.body;
+    const {name} = req.body;
 
     try {
-        const response = await Messagerie.findAll({
-            attributes: ['uuid', 'message','createdAt'],
+        const response = await Messagerie.findAndCountAll({
+            attributes: ['uuid','sent', 'receive','username', 'message','createdAt'],
             include: [{
-                model: Users,
-                model: MessageType
+                model: Users
             }],
             where: {
-                user_userid: userid,
+                username: {
+                    [Op.like]: `%${name}%`
+                  }
             }
         });
         res.status(200).json(response);
@@ -92,13 +93,13 @@ export const getMessageByUserId = async (req,res) => {
 }
 
 export const createMessageUser = async(req,res) => {
-    const {message, userId} = req.body;
+    const {message, userId, msgtypeid} = req.body;
     try {
         await Exam.create({
             message: message,
             sent: true,
             user_userid: userId,
-            archieve: false
+            msgtype_msgtypeid: msgtypeid
         });
         res.status(201).json({msg: "Message well Send"});
     } catch (error) {
@@ -107,14 +108,15 @@ export const createMessageUser = async(req,res) => {
 }
 
 export const createMessageAdmin= async(req,res) => {
-    const {message, msgtype_msgtypeid} = req.body;
+    const {message, userId, msgtypeid,username} = req.body;
     try {
-        await Exam.create({
+        await Messagerie.create({
+            username: username,
             message: message,
-            msgtype_msgtypeid: msgtype_msgtypeid,
+            sent: true,
+            receive: false,
             user_userid: userId,
-            receive: true,
-            archieve: false
+            msgtype_msgtypeid: msgtypeid
         });
         res.status(201).json({msg: "Message well Send"});
     } catch (error) {
