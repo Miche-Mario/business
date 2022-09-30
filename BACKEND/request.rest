@@ -1,26 +1,42 @@
 // Create a user
-POST http://localhost:5000/users
+POST http://localhost:5000/login
 Content-Type:  application/json
 
 {
-    "firstname": "Menou Gael",
-    "username": "menou",
+    "firstname": "gael Gael",
+    "username": "gaell",
     "password": "123",
     "confirmpassword": "123",
     "role": "admin"
+ 
 }
 
 ###
 // get All Users
 GET http://localhost:5000/users
+###
+// get Single user
+
+GET http://localhost:5000/users/f76f92d9-c161-4885-9633-6f0db36113cd
 
 
 ###
 // Login user
-POST http://localhost:5000/login
+POST http://localhost:5000/transaction
 Content-Type:  application/json
 
 {
-    "username": "menou",
-    "password": "123"
+    "user_userid": 1,
+    "courant": 15000,
+    "pret": 16999,
+    "userid": 1
+}
+
+###
+// Login user
+POST http://localhost:5000/username
+Content-Type:  application/json
+
+{
+    "search": "ga"
 }

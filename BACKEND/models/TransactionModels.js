@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize";
 import db from '../config/Database.js';
-import Compte from "./CompteModels.js";
 import Users from "./UsersModels.js";
 
 
@@ -15,23 +14,23 @@ const Transaction = db.define('transaction', {
             notEmpty: true
         }
     },
-    amount:{
-        type: DataTypes.DECIMAL,
-        allowNull: false,
-        validate:{
-            notEmpty: false,
-                }
-    },
     description:{
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate:{
             notEmpty: false,
         }
     },
-    description:{
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
+    courant:{
+        type: DataTypes.DECIMAL(11, 4),
+        allowNull: true,
+        validate:{
+            notEmpty: false,
+        }
+    },
+    pret:{
+        type: DataTypes.DECIMAL(11, 4),
+        allowNull: true,
         validate:{
             notEmpty: false,
         }
@@ -41,6 +40,5 @@ const Transaction = db.define('transaction', {
 })
 
 Transaction.belongsTo(Users, {foreignKey: 'user_userid'});
-Transaction.belongsTo(Compte, {foreignKey: 'compte_compteid'});
 
 export default Transaction

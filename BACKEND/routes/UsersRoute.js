@@ -4,7 +4,9 @@ import {
     getUserById,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserByName,
+    upload
 } from "../controllers/Users.js"
 import { verifyUser, adminOnly } from '../middleware/AuthUser.js';
 
@@ -12,9 +14,11 @@ import { verifyUser, adminOnly } from '../middleware/AuthUser.js';
 const router = express.Router();
 
 router.get('/users',verifyUser,adminOnly, getUsers);
+router.post('/username',verifyUser,adminOnly, getUserByName);
+
 router.get('/users/:id', verifyUser,adminOnly, getUserById);
-router.post('/users', createUser);
-router.patch('/users/:id',verifyUser,adminOnly, updateUser);
+router.post('/users', upload, createUser);
+router.patch('/users/:id',verifyUser,upload,adminOnly, updateUser);
 router.delete('/users/:id',verifyUser,adminOnly, deleteUser );
 
 

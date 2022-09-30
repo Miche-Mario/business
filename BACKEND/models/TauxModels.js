@@ -21,7 +21,7 @@ const Taux = db.define('taux', {
                 }
     },
     value:{
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(11, 4),
         allowNull: false,
         validate:{
             notEmpty: false,

@@ -4,15 +4,13 @@ import {Op} from 'sequelize'
 import multer from "multer";
 import path from "path"
 import Users from "../models/UsersModels.js";
-import Compte from "../models/CompteModels.js";
 
 export const getTransaction = async (req,res) => {
     try {
-        const response = await Transaction.findAll({
-            attributes: ['uuid', 'amount','description', 'archieve'],
+        const response = await Transaction.findAndCountAll({
+            attributes: ['uuid', 'courant','description', 'pret'],
             include: [{
                 model: Users,
-                model: Compte
             }]
         });
         res.status(200).json(response);
@@ -22,14 +20,39 @@ export const getTransaction = async (req,res) => {
 }
 
 export const createTransaction = async(req,res) => {
-    const {amount, description, user_userid, compte_compteid, archieve} = req.body;
+
+    const {userid, description, user_userid, courant, pret} = req.body;
+
+
+    let responsee;
+      
+            responsee = await Transaction.findOne({ 
+                where: {
+                    id: userid
+                }
+            
+            });
+
+        if(responsee) {
+            try {
+                await Transaction.destroy({
+                    where: {
+                        id: responsee.id
+                    }
+                });
+                res.status(201).json({ msg: "Courses Deleted" });
+            } catch (error) {
+                res.status(400).json({ msg: error.message })
+            }
+        }
+            
+        
     try {
-        await Exam.create({
-            amount: amount,
+        await Transaction.create({
             description: description,
-            user_userid: user_userid,
-            compte_compteid: compte_compteid,
-            archieve: false
+            courant: courant,
+            pret: pret,
+            user_userid: user_userid
         });
         res.status(201).json({msg: "Transaction well Send"});
     } catch (error) {

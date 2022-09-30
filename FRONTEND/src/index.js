@@ -17,8 +17,10 @@ import Loan from './pages/Loan';
 import Profile from './component/Profile';
 import EditProfile from './component/EditProfile';
 import Transfer from './pages/Transfer';
-
+import Users from './pages/Users';
+import ShowUser from './pages/ShowUser';
 import axios from "axios"
+import Transaction from './pages/Transaction';
 axios.defaults.withCredentials = true;
 
 
@@ -41,6 +43,9 @@ root.render(
             <Route path='/editprofile' element={<EditProfile/>}/>
             <Route path='/onlineshopping' element={<OnlineShopping/>}/>
             <Route path='/transfer' element={<Transfer/>}  />
+            <Route path='/users' element={<Users/>}  />
+            <Route path='/users/afficher/:id' element={<ShowUser/>}  />
+            <Route path='/transaction' element={<Transaction/>}  />
         </Routes>
         </BrowserRouter>
         </Providerr>

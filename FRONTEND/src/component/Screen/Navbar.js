@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import { GrMail }  from 'react-icons/gr'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useSelector } from 'react-redux'
 
 
 const theme = createTheme({
@@ -27,6 +28,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 const Navbar = () => {
+  const { user} = useSelector(
+    (state) => state.auth
+  );
+
+
     const handleClick = event => {
         document.querySelector('#toggleSidebarMobileHamburger').classList.add('hidden');
         document.querySelector('#toggleSidebarMobileClose').classList.remove('hidden');
@@ -89,7 +95,7 @@ const Navbar = () => {
          <div className='w-8'>
             <img src={Avatar} className="rounded-full" alt='profile'/>
          </div>
-        <div className="font-bold text-sm flex-1 text-black">Alex</div>
+        <div className="font-bold text-sm flex-1 text-black">{user && user.firstname}</div>
         <div className="inline-block w-3 h-3 ml-1 lg:mr-1 rounded-full bg-green-400"> </div>
 
         <span>

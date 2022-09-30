@@ -11,7 +11,7 @@ const Users = db.define('users', {
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         validate: {
-            notEmpty: true
+            notEmpty: false
         }
     },
     firstname:{
@@ -121,16 +121,16 @@ const Users = db.define('users', {
     },
     password:{
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate:{
-            notEmpty: true
+            notEmpty: false
         }
     },
     role:{
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate:{
-            notEmpty: true
+            notEmpty: false
         }
     }
 

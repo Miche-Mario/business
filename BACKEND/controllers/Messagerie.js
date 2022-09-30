@@ -4,7 +4,6 @@ import {Op} from 'sequelize'
 import multer from "multer";
 import path from "path"
 import Users from "../models/UsersModels.js";
-import Compte from "../models/CompteModels.js";
 import MessageType from "../models/MessageTypeModels.js";
 
 export const getAdminMessage = async (req,res) => {

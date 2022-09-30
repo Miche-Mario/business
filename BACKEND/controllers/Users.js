@@ -6,8 +6,28 @@ import multer from "multer";
 import path from "path"
 export const getUsers = async(req,res) => {
     try {
-        const response = await Users.findAll({
-            attributes: ['profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role']
+        const response = await Users.findAndCountAll({
+            attributes: ['profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
+            where: {
+                role: 'user'
+            }
+        });
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+    }
+}
+
+export const getUserByName = async(req,res) => {
+    const { search } = await req.body;
+    try {
+        const response = await Users.findAndCountAll({
+            attributes: ['profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
+            where: {
+                firstname: {
+                    [Op.like]: `%${search}%`
+                  }
+            }
         });
         res.status(200).json(response);
     } catch (error) {
@@ -18,7 +38,7 @@ export const getUsers = async(req,res) => {
 export const getUserById = async(req,res) => {
     try {
         const response = await Users.findOne({
-            attributes: ['uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
+            attributes: ['createdAt','profile','uuid', 'firstname', 'surname', 'fiscalcode', 'email', 'dateofbirth', 'gender', 'maritalstatus', 'phonenumber', 'address1', 'address2', 'occupation', 'monthlyincome', 'sourceofincome', 'username', 'password', 'role'],
             where: {
                 uuid: req.params.id
             }
@@ -29,9 +49,9 @@ export const getUserById = async(req,res) => {
     }
 }
 export const createUser = async(req,res) => {
+    const url = req.protocol + '://' + req.get('host')
     const {confirmpassword,firstname, surname, fiscalcode, email, dateofbirth, gender, maritalstatus, phonenumber, address1, address2, occupation, monthlyincome, sourceofincome,username, password, role, profile} = req.body;
     if(password !== confirmpassword) return res.status(400).json({msg: "Incorrect Confirm Password"});
-    const hashPassword = await argon2.hash(password)
     try {
         await Users.create({
             firstname: firstname,
@@ -47,9 +67,9 @@ export const createUser = async(req,res) => {
             occupation: occupation,
             monthlyincome: monthlyincome,
             sourceofincome: sourceofincome,
-            profile: req.file,
+            profile: url + '/Images/' + req.file.filename,
             username: username,
-            password: hashPassword,
+            password: password,
             role: role
         });
         res.status(201).json({msg: "User Successfully created"});
@@ -58,6 +78,8 @@ export const createUser = async(req,res) => {
     }
 }
 export const updateUser = async(req,res) => {
+    const url = req.protocol + '://' + req.get('host')
+
     const user = await Users.findOne({
         where: {
             uuid: req.params.id
@@ -87,7 +109,7 @@ export const updateUser = async(req,res) => {
             occupation: occupation,
             monthlyincome: monthlyincome,
             sourceofincome: sourceofincome,
-            profile: req.file,
+            profile: url + '/Images/' + req.file.filename,
             username: username,
             password: hashPassword,
             role: role
@@ -124,26 +146,25 @@ export const deleteUser = async(req,res) => {
 
 
 
-export const storage = multer.diskStorage({
+
+const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'Images')
+        cb(null, 'Images');
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname))
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null, '-' + fileName)
     }
-})
-
+});
 export const upload = multer({
     storage: storage,
-    limits: { fileSize: '1000000' },
     fileFilter: (req, file, cb) => {
-        const fileTypes = /jpeg|jpg|png|gif/
-        const mimeType = fileTypes.test(file.mimetype)  
-        const extname = fileTypes.test(path.extname(file.originalname))
-        if(mimeType && extname) {
-            return cb(null, true)
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
         }
-        cb('Give proper files formate to upload')
-       
     }
 }).single('profile')
+
